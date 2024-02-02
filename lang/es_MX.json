@@ -1,0 +1,7 @@
+{
+  "settingsTool.navigationItemTitle": "Configuración",
+  "settingsTool.saveButtonText": "Guardar",
+  "settingsTool.noSettingsFieldsText": "No se han definido campos de configuración.",
+  "settingsTool.settingsSuccessToast": "¡Configuración actualizada con éxito!",
+  "settingsTool.general": "General"
+}

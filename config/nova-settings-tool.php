@@ -5,12 +5,12 @@ return [
     /**
      * Set a name for the settings table
      */
-    'table' => 'nova_settings',
+    'table' => 'nova_settings_tool',
 
     /**
      * URL path of settings page
      */
-    'base_path' => 'nova-settings',
+    'base_path' => 'nova-settings-tool',
 
     /**
      * Reload the entire page on save. Useful when updating any Nova UI related settings.
@@ -24,7 +24,7 @@ return [
      * The model you want to use as a model needs to extend the original model.
      */
     'models' => [
-        'settings' => \Outl1ne\NovaSettings\Models\Settings::class,
+        'settings' => \CodeHeroMX\SettingsTool\Models\Settings::class,
     ],
 
     /**

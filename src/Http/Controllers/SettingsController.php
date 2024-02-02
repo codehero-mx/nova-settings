@@ -1,13 +1,13 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Http\Controllers;
+namespace CodeHeroMX\SettingsTool\Http\Controllers;
 
 use Laravel\Nova\Panel;
 use Illuminate\Http\Request;
 use Laravel\Nova\ResolvesFields;
 use Illuminate\Routing\Controller;
 use Laravel\Nova\Contracts\Resolvable;
-use Outl1ne\NovaSettings\NovaSettings;
+use CodeHeroMX\SettingsTool\SettingsTool;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\FieldCollection;
 use Illuminate\Support\Facades\Validator;
@@ -20,23 +20,25 @@ class SettingsController extends Controller
 
     public function get(Request $request)
     {
-        if (!NovaSettings::canSeeSettings()) return $this->unauthorized();
+        if (!SettingsTool::canSeeSettings()) {
+            return $this->unauthorized();
+        }
 
         $path = $request->get('path', 'general');
-        $label = NovaSettings::getPageName($path);
+        $label = SettingsTool::getPageName($path);
         $fields = $this->assignToPanels($label, $this->availableFields($path));
         $panels = $this->panelsWithDefaultLabel($label, app(NovaRequest::class));
 
         $addResolveCallback = function (&$field) {
             if (!empty($field->attribute)) {
-                $setting = NovaSettings::getSettingsModel()::firstOrNew(['key' => $field->attribute]);
+                $setting = SettingsTool::getSettingsModel()::firstOrNew(['key' => $field->attribute]);
                 $fakeResource = $this->makeFakeResource($field->attribute, isset($setting) ? $setting->value : '');
                 $field->resolve($fakeResource);
             }
 
             if (!empty($field->meta['fields'])) {
                 foreach ($field->meta['fields'] as $_field) {
-                    $setting = NovaSettings::getSettingsModel()::where('key', $_field->attribute)->first();
+                    $setting = SettingsTool::getSettingsModel()::where('key', $_field->attribute)->first();
                     $fakeResource = $this->makeFakeResource($_field->attribute, isset($setting) ? $setting->value : null);
                     $_field->resolve($fakeResource);
                 }
@@ -50,13 +52,13 @@ class SettingsController extends Controller
         return response()->json([
             'panels' => $panels,
             'fields' => $fields,
-            'authorizations' => NovaSettings::getAuthorizations(),
+            'authorizations' => SettingsTool::getAuthorizations(),
         ], 200);
     }
 
     public function save(NovaRequest $request)
     {
-        if (!NovaSettings::getAuthorizations('authorizedToUpdate')) return $this->unauthorized();
+        if (!SettingsTool::getAuthorizations('authorizedToUpdate')) return $this->unauthorized();
 
         $fields = $this->availableFields($request->get('path', 'general'));
 
@@ -79,7 +81,7 @@ class SettingsController extends Controller
         $fields->whereInstanceOf(Resolvable::class)->each(function ($field) use ($request) {
             if (empty($field->attribute)) return;
             if ($field->isReadonly(app(NovaRequest::class))) return;
-            $settingsClass = NovaSettings::getSettingsModel();
+            $settingsClass = SettingsTool::getSettingsModel();
 
             // For nova-translatable support
             if (!empty($field->meta['translatable']['original_attribute'])) $field->attribute = $field->meta['translatable']['original_attribute'];
@@ -102,7 +104,7 @@ class SettingsController extends Controller
             }
         });
 
-        if (config('nova-settings.reload_page_on_save', false) === true) {
+        if (config('nova-settings-tool.reload_page_on_save', false) === true) {
             return response()->json(['reload' => true]);
         }
 
@@ -111,11 +113,11 @@ class SettingsController extends Controller
 
     public function deleteImage(Request $request, $pathName, $fieldName)
     {
-        if (!NovaSettings::getAuthorizations('authorizedToUpdate')) return $this->unauthorized();
+        if (!SettingsTool::getAuthorizations('authorizedToUpdate')) return $this->unauthorized();
 
-        $existingRow = NovaSettings::getSettingsModel()::where('key', $fieldName)->first();
+        $existingRow = SettingsTool::getSettingsModel()::where('key', $fieldName)->first();
         if (isset($existingRow)) {
-            $field = $this->findField(collect(NovaSettings::getFields($pathName)), $fieldName);
+            $field = $this->findField(collect(SettingsTool::getFields($pathName)), $fieldName);
 
             // Delete file if exists
             if (isset($field) && $field instanceof \Laravel\Nova\Fields\File) {
@@ -156,12 +158,12 @@ class SettingsController extends Controller
 
     protected function availableFields($path = 'general')
     {
-        return (new FieldCollection($this->filter(NovaSettings::getFields($path))))->authorized(request());
+        return (new FieldCollection($this->filter(SettingsTool::getFields($path))))->authorized(request());
     }
 
     protected function fields(Request $request, $path = 'general')
     {
-        return NovaSettings::getFields($path);
+        return SettingsTool::getFields($path);
     }
 
     protected function makeFakeResource(string $fieldName, $fieldValue)

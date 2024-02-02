@@ -1,46 +1,46 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Tests\Feature;
+namespace CodeHeroMX\SettingsTool\Tests\Feature;
 
 use Laravel\Nova\Fields\Text;
-use Outl1ne\NovaSettings\NovaSettings;
-use Outl1ne\NovaSettings\Tests\IntegrationTestCase;
+use CodeHeroMX\SettingsTool\SettingsTool;
+use CodeHeroMX\SettingsTool\Tests\IntegrationTestCase;
 
 class NavigationTest extends IntegrationTestCase
 {
     public function test_general_navigation_renders_with_no_fields()
     {
-        $settingsTool = new NovaSettings;
+        $settingsTool = new SettingsTool;
         $navigationView = $settingsTool->renderNavigation()->render();
-        $this->assertStringContainsString('dusk="nova-settings"', $navigationView);
+        $this->assertStringContainsString('dusk="nova-settings-tool"', $navigationView);
     }
 
     public function test_general_navigation_renders_with_fields()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('Test'),
         ]);
 
-        $settingsTool = new NovaSettings;
+        $settingsTool = new SettingsTool;
         $navigationView = $settingsTool->renderNavigation()->render();
 
-        $this->assertStringContainsString('dusk="nova-settings"', $navigationView);
+        $this->assertStringContainsString('dusk="nova-settings-tool"', $navigationView);
     }
 
     public function test_multiple_navigation_renders()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('Test'),
         ]);
 
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('TestTwo'),
         ], [], 'Other');
 
-        $settingsTool = new NovaSettings;
+        $settingsTool = new SettingsTool;
         $navigationView = $settingsTool->renderNavigation()->render();
 
-        $this->assertStringContainsString('dusk="nova-settings-general"', $navigationView);
-        $this->assertStringContainsString('dusk="nova-settings-other"', $navigationView);
+        $this->assertStringContainsString('dusk="nova-settings-tool-general"', $navigationView);
+        $this->assertStringContainsString('dusk="nova-settings-tool-other"', $navigationView);
     }
 }

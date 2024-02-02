@@ -1,17 +1,17 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Tests\Feature;
+namespace CodeHeroMX\SettingsTool\Tests\Feature;
 
 use Laravel\Nova\Fields\Number;
-use Outl1ne\NovaSettings\NovaSettings;
-use Outl1ne\NovaSettings\Models\Settings;
-use Outl1ne\NovaSettings\Tests\IntegrationTestCase;
+use CodeHeroMX\SettingsTool\SettingsTool;
+use CodeHeroMX\SettingsTool\Models\Settings;
+use CodeHeroMX\SettingsTool\Tests\IntegrationTestCase;
 
 class SettingsCastTest extends IntegrationTestCase
 {
     public function test_integer_casting_works()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Number::make('Test'),
         ], ['test' => 'int']);
 
@@ -24,7 +24,7 @@ class SettingsCastTest extends IntegrationTestCase
 
     public function test_array_casting_works()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Number::make('Test'),
         ], ['test' => 'array']);
 
@@ -38,7 +38,7 @@ class SettingsCastTest extends IntegrationTestCase
 
     public function test_boolean_casting_works()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Number::make('Test'),
         ], ['test' => 'boolean']);
 

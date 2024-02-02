@@ -1,6 +1,6 @@
 <?php
 
-namespace Outl1ne\NovaSettings;
+namespace CodeHeroMX\SettingsTool;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
@@ -8,37 +8,36 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
-use Outl1ne\NovaSettings\Models\Settings;
+use CodeHeroMX\SettingsTool\Models\Settings;
 
-class NovaSettings extends Tool
+class SettingsTool extends Tool
 {
     public function boot()
     {
-        Nova::script('nova-settings', __DIR__ . '/../dist/js/entry.js');
+        Nova::script('nova-settings-tool', __DIR__ . '/../dist/js/entry.js');
     }
 
     public function menu(Request $request)
     {
         $fields = static::getFields();
-        $basePath = config('nova-settings.base_path', 'nova-settings');
+        $basePath = config('nova-settings-tool.base_path', 'nova-settings-tool');
         $isAuthorized = static::canSeeSettings();
-        $showInSidebar = config('nova-settings.show_in_sidebar', true);
+        $showInSidebar = config('nova-settings-tool.show_in_sidebar', true);
 
         if (!$isAuthorized || !$showInSidebar || empty($fields)) return null;
 
         if (count($fields) == 1) {
-            
-            return MenuSection::make(__('novaSettings.navigationItemTitle'))
+
+            return MenuSection::make(__('settingsTool.navigationItemTitle'))
                 ->path($basePath . '/' . array_key_first($fields))
                 ->icon('adjustments');
-        } 
-        else {
+        } else {
             $menuItems = [];
             foreach ($fields as $key => $fields) {
                 $menuItems[] = MenuItem::link(self::getPageName($key), "{$basePath}/{$key}");
             }
 
-            return MenuSection::make(__('novaSettings.navigationItemTitle'), $menuItems)
+            return MenuSection::make(__('settingsTool.navigationItemTitle'), $menuItems)
                 ->icon('adjustments')
                 ->collapsable();
         }
@@ -46,22 +45,22 @@ class NovaSettings extends Tool
 
     public static function getSettingsTableName(): string
     {
-        return config('nova-settings.table', 'nova_settings');
+        return config('nova-settings-tool.table', 'nova_settings');
     }
 
     public static function getPageName($key): string
     {
-        if (__("novaSettings.$key") === "novaSettings.$key") {
+        if (__("settingsTool.$key") === "settingsTool.$key") {
             return Str::title(str_replace('-', ' ', $key));
         } else {
-            return __("novaSettings.$key");
+            return __("settingsTool.$key");
         }
     }
 
     public static function getAuthorizations($key = null)
     {
         $request = request();
-        $fakeResource = new \Outl1ne\NovaSettings\Nova\Resources\Settings(NovaSettings::getSettingsModel()::make());
+        $fakeResource = new \CodeHeroMX\SettingsTool\Nova\Resources\Settings(SettingsTool::getSettingsModel()::make());
 
         $authorizations = [
             'authorizedToView' => $fakeResource->authorizedToView($request),
@@ -133,7 +132,7 @@ class NovaSettings extends Tool
 
     public static function getSettingsModel(): string
     {
-        return config('nova-settings.models.settings', Settings::class);
+        return config('nova-settings-tool.models.settings', Settings::class);
     }
 
     public static function doesPathExist($path)

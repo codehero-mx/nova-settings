@@ -1,5 +1,5 @@
 {
-  "name": "outl1ne/nova-settings",
+  "name": "codehero-mx/nova-settings-tool",
   "description": "A Laravel Nova tool for editing custom settings using native Nova fields.",
   "keywords": [
     "laravel",
@@ -8,8 +8,7 @@
   "license": "MIT",
   "require": {
     "php": ">=8.0",
-    "laravel/nova": "^4.26",
-    "outl1ne/nova-translations-loader": "^5.0"
+    "laravel/nova": "^4.26"
   },
   "require-dev": {
     "orchestra/testbench": "^7.0",
@@ -19,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Outl1ne\\NovaSettings\\": "src/"
+      "CodeHeroMX\\SettingsTool\\": "src/"
     },
     "files": [
       "./src/helpers.php"
@@ -27,13 +26,13 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Outl1ne\\NovaSettings\\Tests\\": "tests"
+      "CodeHeroMX\\SettingsTool\\Tests\\": "tests"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Outl1ne\\NovaSettings\\NovaSettingsServiceProvider"
+        "CodeHeroMX\\SettingsTool\\SettingsToolServiceProvider"
       ]
     }
   },

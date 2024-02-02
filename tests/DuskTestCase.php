@@ -1,11 +1,11 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Tests;
+namespace CodeHeroMX\SettingsTool\Tests;
 
 use Laravel\Nova\Nova;
 use Laravel\Dusk\Browser;
 use Laravel\Nova\Fields\Text;
-use Outl1ne\NovaSettings\NovaSettings;
+use CodeHeroMX\SettingsTool\SettingsTool;
 use Illuminate\Foundation\Application;
 
 abstract class DuskTestCase extends \Orchestra\Testbench\Dusk\TestCase
@@ -36,10 +36,10 @@ abstract class DuskTestCase extends \Orchestra\Testbench\Dusk\TestCase
         parent::setUp();
 
         Nova::tools([
-            new NovaSettings(),
+            new SettingsTool(),
         ]);
 
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('Hello Field', 'hello_field'),
         ]);
 
@@ -72,7 +72,7 @@ abstract class DuskTestCase extends \Orchestra\Testbench\Dusk\TestCase
             'Fideloper\Proxy\TrustedProxyServiceProvider',
             'Laravel\Nova\NovaCoreServiceProvider',
             'Carbon\Laravel\ServiceProvider',
-            'Outl1ne\NovaSettings\NovaSettingsServiceProvider',
+            'CodeHeroMX\SettingsTool\SettingsToolServiceProvider',
         ];
     }
 

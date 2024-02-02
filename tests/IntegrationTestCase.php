@@ -1,13 +1,13 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Tests;
+namespace CodeHeroMX\SettingsTool\Tests;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaServiceProvider;
 use Illuminate\Support\Facades\Route;
-use Outl1ne\NovaSettings\NovaSettings;
+use CodeHeroMX\SettingsTool\SettingsTool;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Outl1ne\NovaSettings\NovaSettingsServiceProvider;
+use CodeHeroMX\SettingsTool\SettingsToolServiceProvider;
 
 abstract class IntegrationTestCase extends Orchestra
 {
@@ -15,10 +15,10 @@ abstract class IntegrationTestCase extends Orchestra
     {
         parent::setUp();
 
-        NovaSettings::clearFields();
+        SettingsTool::clearFields();
         Route::middlewareGroup('nova', []);
         Nova::$tools = [
-            new NovaSettings,
+            new SettingsTool,
         ];
 
         $this->setUpDatabase($this->app);
@@ -28,7 +28,7 @@ abstract class IntegrationTestCase extends Orchestra
     {
         return [
             NovaServiceProvider::class,
-            NovaSettingsServiceProvider::class,
+            SettingsToolServiceProvider::class,
         ];
     }
 

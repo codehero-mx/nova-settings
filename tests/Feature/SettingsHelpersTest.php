@@ -1,9 +1,9 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Tests\Feature;
+namespace CodeHeroMX\SettingsTool\Tests\Feature;
 
-use Outl1ne\NovaSettings\Models\Settings;
-use Outl1ne\NovaSettings\Tests\IntegrationTestCase;
+use CodeHeroMX\SettingsTool\Models\Settings;
+use CodeHeroMX\SettingsTool\Tests\IntegrationTestCase;
 
 class SettingsHelpersTest extends IntegrationTestCase
 {

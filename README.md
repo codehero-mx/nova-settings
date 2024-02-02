@@ -1,7 +1,7 @@
 # Nova Settings
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/outl1ne/nova-settings.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-settings)
-[![Total Downloads](https://img.shields.io/packagist/dt/outl1ne/nova-settings.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-settings)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/outl1ne/nova-settings-tool.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-settings-tool)
+[![Total Downloads](https://img.shields.io/packagist/dt/outl1ne/nova-settings-tool.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-settings-tool)
 
 This [Laravel Nova](https://nova.laravel.com) package allows you to create custom settings in code (using Nova's native fields) and creates a UI for the users where the settings can be edited.
 
@@ -26,8 +26,8 @@ This [Laravel Nova](https://nova.laravel.com) package allows you to create custo
 Install the package in a Laravel Nova project via Composer and run migrations:
 
 ```bash
-# Install nova-settings
-composer require outl1ne/nova-settings
+# Install nova-settings-tool
+composer require outl1ne/nova-settings-tool
 
 # Run migrations
 php artisan migrate
@@ -42,7 +42,7 @@ public function tools()
 {
     return [
         // ...
-        new \Outl1ne\NovaSettings\NovaSettings
+        new \CodeHeroMX\SettingsTool\SettingsTool
     ];
 }
 ```
@@ -51,11 +51,11 @@ public function tools()
 
 ### Registering fields
 
-Define the fields in your `NovaServiceProvider`'s `boot()` function by calling `NovaSettings::addSettingsFields()`.
+Define the fields in your `NovaServiceProvider`'s `boot()` function by calling `SettingsTool::addSettingsFields()`.
 
 ```php
 // Using an array
-\Outl1ne\NovaSettings\NovaSettings::addSettingsFields([
+\CodeHeroMX\SettingsTool\SettingsTool::addSettingsFields([
     Text::make('Some setting', 'some_setting'),
     Number::make('A number', 'a_number'),
 ]);
@@ -63,7 +63,7 @@ Define the fields in your `NovaServiceProvider`'s `boot()` function by calling `
 // OR
 
 // Using a callable
-\Outl1ne\NovaSettings\NovaSettings::addSettingsFields(function() {
+\CodeHeroMX\SettingsTool\SettingsTool::addSettingsFields(function() {
   return [
     Text::make('Some setting', 'some_setting'),
     Number::make('A number', 'a_number'),
@@ -75,7 +75,7 @@ Define the fields in your `NovaServiceProvider`'s `boot()` function by calling `
 
 ```php
 // Using an array
-\Outl1ne\NovaSettings\NovaSettings::addSettingsFields([
+\CodeHeroMX\SettingsTool\SettingsTool::addSettingsFields([
     Panel::make('Panel Title', [
       Text::make('Some setting', 'some_setting'),
       Number::make('A number', 'a_number'),
@@ -88,7 +88,7 @@ Define the fields in your `NovaServiceProvider`'s `boot()` function by calling `
 If you want the value of the setting to be formatted before it's returned, pass an array similar to `Eloquent`'s `$casts` property as the second parameter.
 
 ```php
-\Outl1ne\NovaSettings\NovaSettings::addSettingsFields([
+\CodeHeroMX\SettingsTool\SettingsTool::addSettingsFields([
     // ... fields
 ], [
   'some_boolean_value' => 'boolean',
@@ -103,7 +103,7 @@ If you want the value of the setting to be formatted before it's returned, pass 
 Add a settings page name as a third argument to list those settings in a custom subpage.
 
 ```php
-\Outl1ne\NovaSettings\NovaSettings::addSettingsFields([
+\CodeHeroMX\SettingsTool\SettingsTool::addSettingsFields([
     Text::make('Some setting', 'some_setting'),
     Number::make('A number', 'a_number'),
 ], [], 'Subpage');
@@ -111,19 +111,19 @@ Add a settings page name as a third argument to list those settings in a custom 
 
 If you leave the custom name empty, the field(s) will be listed under "General".
 
-To translate the page name, publish the translations and add a new key `novaSettings.$subpage` to the respective translations file, where `$subpage` is the name of the page (full lowercase, slugified).
+To translate the page name, publish the translations and add a new key `settingsTool.$subpage` to the respective translations file, where `$subpage` is the name of the page (full lowercase, slugified).
 
 ### Authorization
 
 #### Show/hide all settings
 
-If you want to hide the whole `Settings` area from the sidebar, you can authorize the `NovaSettings` tool like so:
+If you want to hide the whole `Settings` area from the sidebar, you can authorize the `SettingsTool` tool like so:
 
 ```php
 public function tools(): array
 {
     return [
-        NovaSettings::make()->canSee(fn () => user()->isAdmin()),
+        SettingsTool::make()->canSee(fn () => user()->isAdmin()),
     ];
 }
 ```
@@ -158,19 +158,19 @@ Sets a setting value for the given key.
 The config file can be published using the following command:
 
 ```bash
-php artisan vendor:publish --provider="Outl1ne\NovaSettings\NovaSettingsServiceProvider" --tag="config"
+php artisan vendor:publish --provider="CodeHeroMX\SettingsTool\SettingsToolServiceProvider" --tag="config"
 ```
 
 | Name                  | Type    | Default           | Description                                                                        |
 | --------------------- | ------- | ----------------- | ---------------------------------------------------------------------------------- |
-| `base_path`           | String  | `nova-settings`   | URL path of settings page.                                                         |
+| `base_path`           | String  | `nova-settings-tool`   | URL path of settings page.                                                         |
 | `reload_page_on_save` | Boolean | false             | Reload the entire page on save. Useful when updating any Nova UI related settings. |
 | `models.settings`     | Model   | `Settings::class` | Optionally override the Settings model.                                            |
 
 The migration can also be published and overwritten using:
 
 ```bash
-php artisan vendor:publish --provider="Outl1ne\NovaSettings\NovaSettingsServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="CodeHeroMX\SettingsTool\SettingsToolServiceProvider" --tag="migrations"
 ```
 
 ## Localization
@@ -178,10 +178,10 @@ php artisan vendor:publish --provider="Outl1ne\NovaSettings\NovaSettingsServiceP
 The translation file(s) can be published by using the following command:
 
 ```bash
-php artisan vendor:publish --provider="Outl1ne\NovaSettings\NovaSettingsServiceProvider" --tag="translations"
+php artisan vendor:publish --provider="CodeHeroMX\SettingsTool\SettingsToolServiceProvider" --tag="translations"
 ```
 
-You can add your translations to `resources/lang/vendor/nova-settings/` by creating a new translations file with the locale name (ie `et.json`) and copying the JSON from the existing `en.json`.
+You can add your translations to `resources/lang/vendor/nova-settings-tool/` by creating a new translations file with the locale name (ie `et.json`) and copying the JSON from the existing `en.json`.
 
 ## Credits
 

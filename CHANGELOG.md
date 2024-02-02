@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed casting of date and datetime objects when passing them into field ([see issue](https://github.com/outl1ne/nova-settings/issues/172))
+- Fixed casting of date and datetime objects when passing them into field ([see issue](https://github.com/outl1ne/nova-settings-tool/issues/172))
 
 ## [5.2.1] - 10-08-2023
 

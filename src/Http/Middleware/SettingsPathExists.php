@@ -1,9 +1,9 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Http\Middleware;
+namespace CodeHeroMX\SettingsTool\Http\Middleware;
 
 
-use Outl1ne\NovaSettings\NovaSettings;
+use CodeHeroMX\SettingsTool\SettingsTool;
 
 class SettingsPathExists
 {
@@ -18,6 +18,6 @@ class SettingsPathExists
     {
         $path = $request->get('path') ?: $request->route('path');
         $path = !empty($path) ? trim($path) : 'general';
-        return NovaSettings::doesPathExist($path) ? $next($request) : abort(404);
+        return SettingsTool::doesPathExist($path) ? $next($request) : abort(404);
     }
 }

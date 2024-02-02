@@ -1,15 +1,15 @@
 <template>
   <LoadingView :loading="loading" :key="pageId">
-    <Head :title="__('novaSettings.navigationItemTitle') + (pageId !== 'general' ? ` (${pageId})` : '')" />
+    <Head :title="__('settingsTool.navigationItemTitle') + (pageId !== 'general' ? ` (${pageId})` : '')" />
 
-    <form v-if="fields && fields.length" @submit.prevent="update" autocomplete="off" dusk="nova-settings-form">
+    <form v-if="fields && fields.length" @submit.prevent="update" autocomplete="off" dusk="nova-settings-tool-form">
       <template v-for="panel in panelsWithFields" :key="panel.name">
         <component
           :is="`form-` + panel.component"
           :panel="panel"
           :name="panel.name"
           :fields="panel.fields"
-          :resource-name="'nova-settings'"
+          :resource-name="'nova-settings-tool'"
           :resource-id="pageId"
           mode="form"
           class="mb-6"
@@ -26,7 +26,7 @@
           :disabled="isUpdating"
           :processing="isUpdating"
         >
-          {{ __('novaSettings.saveButtonText') }}
+          {{ __('settingsTool.saveButtonText') }}
         </SettingsLoadingButton>
       </div>
     </form>
@@ -34,7 +34,7 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-3" v-else>
       <div class="flex flex-col justify-center align-center">
         <div class="w-3/4 py-4 text-center">
-          <p class="text-90">{{ __('novaSettings.noSettingsFieldsText') }}</p>
+          <p class="text-90">{{ __('settingsTool.noSettingsFieldsText') }}</p>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@ export default {
       const {
         data: { fields, panels, authorizations },
       } = await Nova.request()
-        .get('/nova-vendor/nova-settings/settings', { params })
+        .get('/nova-vendor/nova-settings-tool/settings', { params })
         .catch(error => {
           if (error.response.status == 404) {
             // this.$router.push({ name: '404' });
@@ -87,7 +87,7 @@ export default {
       // Dispatch event
       const eventName = this.isUpdating ? 'resource-updated' : 'resource-loaded';
       Nova.$emit(eventName, {
-        resourceName: 'nova-settings',
+        resourceName: 'nova-settings-tool',
       });
     },
     async update() {
@@ -103,7 +103,7 @@ export default {
             return;
           }
         }
-        Nova.success(this.__('novaSettings.settingsSuccessToast'));
+        Nova.success(this.__('settingsTool.settingsSuccessToast'));
 
         // Reset the form by refetching the fields
         await this.getFields();
@@ -119,7 +119,7 @@ export default {
       }
     },
     updateRequest() {
-      return Nova.request().post('/nova-vendor/nova-settings/settings', this.formData);
+      return Nova.request().post('/nova-vendor/nova-settings-tool/settings', this.formData);
     },
   },
   computed: {

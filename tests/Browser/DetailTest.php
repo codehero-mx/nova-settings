@@ -1,10 +1,10 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Tests\Browser;
+namespace CodeHeroMX\SettingsTool\Tests\Browser;
 
 use App\Models\User;
 use Laravel\Dusk\Browser;
-use Outl1ne\NovaSettings\Tests\DuskTestCase;
+use CodeHeroMX\SettingsTool\Tests\DuskTestCase;
 
 class DetailTest extends DuskTestCase
 {
@@ -43,10 +43,10 @@ class DetailTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
                 ->visit('nova')
-                ->assertVisible('@nova-settings')
+                ->assertVisible('@nova-settings-tool')
                 ->pause(1500)
-                ->click('@nova-settings')
-                ->waitFor('@nova-settings-form')
+                ->click('@nova-settings-tool')
+                ->waitFor('@nova-settings-tool-form')
                 ->assertSee('Hello Field');
 
             $browser->blank();

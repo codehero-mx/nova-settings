@@ -1,7 +1,7 @@
 {
-  "novaSettings.navigationItemTitle": "Instellingen",
-  "novaSettings.saveButtonText": "Instellingen opslaan",
-  "novaSettings.noSettingsFieldsText": "Geen veld gedefineerd.",
-  "novaSettings.settingsSuccessToast": "Instellingen succesvol geupdatet",
-  "novaSettings.general": "Algemeen"
+  "settingsTool.navigationItemTitle": "Instellingen",
+  "settingsTool.saveButtonText": "Instellingen opslaan",
+  "settingsTool.noSettingsFieldsText": "Geen veld gedefineerd.",
+  "settingsTool.settingsSuccessToast": "Instellingen succesvol geupdatet",
+  "settingsTool.general": "Algemeen"
 }

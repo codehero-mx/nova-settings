@@ -1,9 +1,9 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Http\Middleware;
+namespace CodeHeroMX\SettingsTool\Http\Middleware;
 
 use Laravel\Nova\Nova;
-use Outl1ne\NovaSettings\NovaSettings;
+use CodeHeroMX\SettingsTool\SettingsTool;
 
 class Authorize
 {
@@ -29,6 +29,6 @@ class Authorize
      */
     public function matchesTool($tool)
     {
-        return $tool instanceof NovaSettings;
+        return $tool instanceof SettingsTool;
     }
 }

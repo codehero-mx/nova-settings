@@ -1,7 +1,7 @@
 {
-  "novaSettings.navigationItemTitle": "Настройки",
-  "novaSettings.saveButtonText": "Сохранить",
-  "novaSettings.noSettingsFieldsText": "Поля настроек не определены.",
-  "novaSettings.settingsSuccessToast": "Настройки успешно обновлены",
-  "novaSettings.general": "Основные"
+  "settingsTool.navigationItemTitle": "Настройки",
+  "settingsTool.saveButtonText": "Сохранить",
+  "settingsTool.noSettingsFieldsText": "Поля настроек не определены.",
+  "settingsTool.settingsSuccessToast": "Настройки успешно обновлены",
+  "settingsTool.general": "Основные"
 }

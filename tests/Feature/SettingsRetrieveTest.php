@@ -1,27 +1,27 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Tests\Feature;
+namespace CodeHeroMX\SettingsTool\Tests\Feature;
 
 use Laravel\Nova\Fields\Text;
-use Outl1ne\NovaSettings\NovaSettings;
-use Outl1ne\NovaSettings\Tests\IntegrationTestCase;
+use CodeHeroMX\SettingsTool\SettingsTool;
+use CodeHeroMX\SettingsTool\Tests\IntegrationTestCase;
 
 class SettingsRetrieveTest extends IntegrationTestCase
 {
     public function test_general_fields_are_returned_with_no_path()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('Test'),
             Text::make('TestOne'),
         ]);
 
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('TestTwo'),
             Text::make('TestThree'),
             Text::make('TestFour'),
         ], [], 'Other');
 
-        $request = $this->getJson(route('nova-settings.get'));
+        $request = $this->getJson(route('nova-settings-tool.get'));
 
         $request->assertStatus(200);
         $request->assertJsonCount(2, 'fields');
@@ -29,18 +29,18 @@ class SettingsRetrieveTest extends IntegrationTestCase
 
     public function test_general_fields_are_returned_with_general_path()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('Test'),
             Text::make('TestOne'),
         ]);
 
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('TestTwo'),
             Text::make('TestThree'),
             Text::make('TestFour'),
         ], [], 'Other');
 
-        $request = $this->getJson(route('nova-settings.get', ['path' => 'general']));
+        $request = $this->getJson(route('nova-settings-tool.get', ['path' => 'general']));
 
         $request->assertStatus(200);
         $request->assertJsonCount(2, 'fields');
@@ -48,18 +48,18 @@ class SettingsRetrieveTest extends IntegrationTestCase
 
     public function test_other_fields_are_returned_with_other_path()
     {
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('Test'),
             Text::make('TestOne'),
         ]);
 
-        NovaSettings::addSettingsFields([
+        SettingsTool::addSettingsFields([
             Text::make('TestTwo'),
             Text::make('TestThree'),
             Text::make('TestFour'),
         ], [], 'Other');
 
-        $request = $this->getJson(route('nova-settings.get', ['path' => 'other']));
+        $request = $this->getJson(route('nova-settings-tool.get', ['path' => 'other']));
 
         $request->assertStatus(200);
         $request->assertJsonCount(3, 'fields');

@@ -1,10 +1,10 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Nova\Resources;
+namespace CodeHeroMX\SettingsTool\Nova\Resources;
 
 use Laravel\Nova\Resource;
 use Illuminate\Http\Request;
-use Outl1ne\NovaSettings\NovaSettings;
+use CodeHeroMX\SettingsTool\SettingsTool;
 
 class Settings extends Resource
 {
@@ -14,7 +14,7 @@ class Settings extends Resource
 
     public function __construct($resource)
     {
-        self::$model = NovaSettings::getSettingsModel();
+        self::$model = SettingsTool::getSettingsModel();
         parent::__construct($resource);
     }
 

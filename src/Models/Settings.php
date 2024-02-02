@@ -1,8 +1,8 @@
 <?php
 
-namespace Outl1ne\NovaSettings\Models;
+namespace CodeHeroMX\SettingsTool\Models;
 
-use Outl1ne\NovaSettings\NovaSettings;
+use CodeHeroMX\SettingsTool\SettingsTool;
 use Illuminate\Database\Eloquent\Model;
 
 class Settings extends Model
@@ -15,19 +15,19 @@ class Settings extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(NovaSettings::getSettingsTableName());
+        $this->setTable(SettingsTool::getSettingsTableName());
     }
 
     protected static function booted()
     {
         static::updated(function ($setting) {
-            NovaSettings::getStore()->clearCache($setting->key);
+            SettingsTool::getStore()->clearCache($setting->key);
         });
     }
 
     public function setValueAttribute($value)
     {
-        $this->casts = NovaSettings::getCasts();
+        $this->casts = SettingsTool::getCasts();
 
         $castType = null;
         if ($this->hasCast($this->key)) $castType = $this->getCastType($this->key);
@@ -48,7 +48,7 @@ class Settings extends Model
     public function getValueAttribute($value)
     {
         $originalCasts = $this->casts;
-        $this->casts = NovaSettings::getCasts();
+        $this->casts = SettingsTool::getCasts();
 
         if ($this->hasCast($this->key)) {
             $value = $this->castAttribute($this->key, $value);

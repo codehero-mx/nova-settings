@@ -1,6 +1,6 @@
 <?php
 
-namespace Outl1ne\NovaSettings;
+namespace CodeHeroMX\SettingsTool;
 
 use Illuminate\Support\Str;
 
@@ -56,13 +56,13 @@ class NovaSettingsStore
     public function getSetting($settingKey, $default = null)
     {
         if (isset($this->cache[$settingKey])) return $this->cache[$settingKey];
-        $this->cache[$settingKey] = NovaSettings::getSettingsModel()::getValueForKey($settingKey) ?? $default;
+        $this->cache[$settingKey] = SettingsTool::getSettingsModel()::getValueForKey($settingKey) ?? $default;
         return $this->cache[$settingKey];
     }
 
     public function getSettings(array $settingKeys = null, array $defaults = [])
     {
-        $settingsModel = NovaSettings::getSettingsModel();
+        $settingsModel = SettingsTool::getSettingsModel();
 
         if (!empty($settingKeys)) {
             $hasMissingKeys = !empty(array_diff($settingKeys, array_keys($this->cache)));
@@ -94,7 +94,7 @@ class NovaSettingsStore
 
     public function setSettingValue($settingKey, $value = null)
     {
-        $setting = NovaSettings::getSettingsModel()::firstOrCreate(['key' => $settingKey]);
+        $setting = SettingsTool::getSettingsModel()::firstOrCreate(['key' => $settingKey]);
         $setting->value = $value;
         $setting->save();
         unset($this->cache[$settingKey]);

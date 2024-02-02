@@ -10,7 +10,7 @@ mix
       vue: 'Vue',
     },
     output: {
-      uniqueName: 'outl1ne/nova-settings',
+      uniqueName: 'codehero-mx/nova-settings-tool',
     },
   })
   .alias({
